@@ -7,6 +7,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.0.1.RELEASE"
 	}
 }
 
@@ -14,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'spring-cloud-contract'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -23,6 +25,9 @@ repositories {
 	mavenCentral()
 }
 
+contracts {
+	baseClassForTests = 'com.example.demo.BaseContractTest'
+}
 
 ext {
 	springCloudVersion = 'Finchley.SR1'
@@ -30,6 +35,7 @@ ext {
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter')
+	implementation('org.springframework.boot:spring-boot-starter-web')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.cloud:spring-cloud-starter-contract-verifier')
 }
@@ -37,5 +43,6 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.0.1.RELEASE"
 	}
 }
